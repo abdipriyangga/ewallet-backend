@@ -4,7 +4,7 @@ const { response: formResponse } = require('../helpers/formResponse');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(process.cwd(), 'assets', 'images'));
+    cb(null, path.join(process.cwd(), 'public', 'images'));
   },
   filename: function (req, file, cb) {
     const ext = file.originalname.split('.')[1];
@@ -23,7 +23,7 @@ const upload = multer({
     }
     callback(null, true);
   }
-}).single('picture');
+}).single('images');
 
 const uploadFilter = (req, res, next) => {
   upload(req, res, (err) => {

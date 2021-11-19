@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
         const token = jwt.sign({ id: auth.id, email: auth.email }, APP_SECRET_KEY, { expiresIn: '12h' });
         return formResponse(res, 200, 'login success!', { token, id: auth.id });
       } else {
-        return formResponse(res, 400, 'password does\'n match!');
+        return formResponse(res, 400, 'Wrong email or password!');
       }
     } catch (error) {
       return formResponse(res, 400, 'internal failure!', error);
