@@ -6,6 +6,8 @@ const Transaction = sequelize.define('transaction', {
   userId: Sequelize.INTEGER,
   noRef: Sequelize.STRING,
   deductedBalance: Sequelize.INTEGER,
+  topupBalance: Sequelize.INTEGER,
+  phoneRecipient: Sequelize.STRING,
   transactionFee: Sequelize.INTEGER,
   description: Sequelize.STRING,
 });
