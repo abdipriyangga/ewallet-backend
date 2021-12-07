@@ -3,6 +3,7 @@ const { response: formResponse } = require('../helpers/formResponse');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { APP_SECRET_KEY } = process.env;
+const tokenFCM = require('../models/tokenFCM.model');
 
 exports.register = async (req, res) => {
   const { name, email, password, phone_number } = req.body;
@@ -42,4 +43,20 @@ exports.login = async (req, res) => {
       return formResponse(res, 400, 'internal failure!', error);
     }
   }
+};
+
+exports.registerToken = async (req, res) => {
+  const { token } = req.body;
+  const { id } = req.authUser;
+  const [fcm, created] = await tokenFCM.findOrCreate({
+    where: { token },
+    defaults: {
+      userId: id
+    }
+  });
+  if (!created) {
+    fcm.userId = id;
+    await fcm.save();
+  }
+  return formResponse(res, 200, 'Token Saved!');
 };
